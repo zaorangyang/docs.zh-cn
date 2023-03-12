@@ -44,10 +44,10 @@ FROM data_source
 
 ```SQL
 [COLUMNS TERMINATED BY '<column_separator>'],
-[ROWS TERMINATED BY'<row_separator>'],
-[COLUMNS ([<column_name>[,...]][,column_assignment[,...]])],
+[ROWS TERMINATED BY '<row_separator>'],
+[COLUMNS (<column1_name>[,<column2_name>,<column_assignment>,... ])],
 [WHERE <expr>],
-[PARTITION ([<partition_name>[,...]])]
+[PARTITION (<partition1_name>[,<partition2_name>...])]
 ```
 
 `COLUMNS TERMINATED BY`
@@ -283,7 +283,7 @@ FROM KAFKA
 
 如果需要提高导入性能，避免出现消费积压等情况，则可以通过设置单个 Routine Load 导入作业的期望任务并发度`desired_concurrent_number`，增加实际任务并行度，将一个导入作业拆分成尽可能多的导入任务并行执行。
 
-> 更多提升导入性能的方式，请参见 [Routine Load常见问题](../../../faq/loading/Routine_load_faq.md)
+> 更多提升导入性能的方式，请参见 [Routine Load常见问题](../../../faq/loading/Routine_load_faq.md)。
 
 请注意，实际任务并行度由如下多个参数组成的公式决定，上限为 BE 节点的数量或者消费分区的数量。
 
@@ -349,8 +349,8 @@ FROM KAFKA
 
 如果仅导入满足条件的数据，则可以在 WHERE 子句中设置过滤条件，例如`price > 100`。
 
-```Plain
-CREATE ROUTINE LOAD example_db.example_tbl2_ordertest1 ON example_tbl2
+```SQL
+CREATE ROUTINE LOAD example_db.example_tbl1_ordertest1 ON example_tbl1
 COLUMNS TERMINATED BY ",",
 COLUMNS (order_id, pay_dt, customer_name, nationality, gender, price),
 WHERE price > 100
@@ -541,7 +541,7 @@ FROM KAFKA
 
 **数据集**
 
-假设 Kafka 集群的 Topic `ordertest2` 中存在如下 JSON 格式的数据，实际导入时仅需要导入 key `RECORDS`的值。
+假设 Kafka 集群的 Topic `ordertest3` 中存在如下 JSON 格式的数据，实际导入时仅需要导入 key `RECORDS`的值。
 
 ```JSON
 {"RECORDS":[{"commodity_id": "1", "customer_name": "Mark Twain", "country": "US","pay_time": 1589191487,"price": 875},{"commodity_id": "2", "customer_name": "Oscar Wilde", "country": "UK","pay_time": 1589191487,"price": 895},{"commodity_id": "3", "customer_name": "Antoine de Saint-Exupéry","country": "France","pay_time": 1589191487,"price": 895}]}
@@ -549,10 +549,10 @@ FROM KAFKA
 
 **目标数据库和表**
 
-假设在 StarRocks 集群的目标数据库 `example_db` 中存在目标表`example_tbl3` ，其建表语句如下：
+假设在 StarRocks 集群的目标数据库 `example_db` 中存在目标表`example_tbl4` ，其建表语句如下：
 
 ```SQL
-CREATE TABLE example_db.example_tbl3 ( 
+CREATE TABLE example_db.example_tbl4 ( 
     `commodity_id` varchar(26) NULL COMMENT "品类ID", 
     `customer_name` varchar(26) NULL COMMENT "顾客姓名", 
     `country` varchar(26) NULL COMMENT "顾客国籍", 
@@ -567,7 +567,7 @@ DISTRIBUTED BY HASH(`commodity_id`) BUCKETS 5;
 提交导入作业，设置`"json_root" = "$.RECORDS"`指定实际待导入的json 数据的根节点。并且由于实际待导入的 JSON 数据是数组结构，因此还需要设置`"strip_outer_array" = "true"`，裁剪外层的数组结构。
 
 ```SQL
-CREATE ROUTINE LOAD example_db.example_tbl3_ordertest2 ON example_tbl3
+CREATE ROUTINE LOAD example_db.example_tbl4_ordertest3 ON example_tbl4
 PROPERTIES
 (
     "format" ="json",
