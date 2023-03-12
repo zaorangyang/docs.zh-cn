@@ -19,7 +19,7 @@ CREATE ROUTINE LOAD <database_name>.<job_name> ON <table_name>
 [load_properties]
 [job_properties]
 FROM data_source
-[data_source_properties];
+[data_source_properties]
 ```
 
 ## 参数说明
