@@ -317,7 +317,7 @@ FROM KAFKA
 
 **目标数据库和表**
 
-根据 CSV 数据中需要导入的几列（例如除第五列性别外的其余五列需要导入至 StarRocks）， 在 StarRocks 集群的目标数据库 `example_db` 中创建表 `example_tbl1`。
+根据 CSV 数据中需要导入的几列（例如除第五列性别外的其余五列需要导入至 StarRocks）， 在 StarRocks 集群的目标数据库 `example_db` 中创建表 `example_tbl2`。
 
 ```SQL
 CREATE TABLE example_db.example_tbl2 ( 
@@ -325,7 +325,7 @@ CREATE TABLE example_db.example_tbl2 (
     `pay_dt` date NOT NULL COMMENT "支付日期", 
     `customer_name` varchar(26) NULL COMMENT "顾客姓名", 
     `nationality` varchar(26) NULL COMMENT "国籍", 
-    `price`double NULL COMMENT "支付金额"
+    `price` double NULL COMMENT "支付金额"
 ) 
 PRIMARY KEY (order_id,pay_dt) 
 DISTRIBUTED BY HASH(`order_id`) BUCKETS 5; 
@@ -353,7 +353,7 @@ FROM KAFKA
 ```Plain
 CREATE ROUTINE LOAD example_db.example_tbl2_ordertest1 ON example_tbl2
 COLUMNS TERMINATED BY ",",
-COLUMNS (order_id, pay_dt, customer_name, nationality, gender, price)
+COLUMNS (order_id, pay_dt, customer_name, nationality, gender, price),
 WHERE price > 100
 FROM KAFKA
 (
@@ -508,7 +508,7 @@ CREATE TABLE example_db.example_tbl3 (
     `pay_time` bigint(20) NULL COMMENT "支付时间",  
     `pay_dt` date NULL COMMENT "支付日期", 
     `price`double SUM NULL COMMENT "支付金额") 
-AGGREGATE KEY(`commodity_id`,`customer_name`,`country`,`pay_dt`) 
+AGGREGATE KEY(`commodity_id`,`customer_name`,`country`,`pay_time`,`pay_dt`) 
 DISTRIBUTED BY HASH(`commodity_id`) BUCKETS 5; 
 ```
 
@@ -545,13 +545,7 @@ FROM KAFKA
 假设 Kafka 集群的 Topic `ordertest2` 中存在如下 JSON 格式的数据，实际导入时仅需要导入 key `RECORDS`的值。
 
 ```JSON
-{
-"RECORDS":[
-{"commodity_id": "1", "customer_name": "Mark Twain", "country": "US","pay_time": 1589191487,"price": 875},
-{"commodity_id": "2", "customer_name": "Oscar Wilde", "country": "UK","pay_time": 1589191487,"price": 895},
-{"commodity_id": "3", "customer_name": "Antoine de Saint-Exupéry","country": "France","pay_time": 1589191487,"price": 895}
-]
-}
+{"RECORDS":[{"commodity_id": "1", "customer_name": "Mark Twain", "country": "US","pay_time": 1589191487,"price": 875},{"commodity_id": "2", "customer_name": "Oscar Wilde", "country": "UK","pay_time": 1589191487,"price": 895},{"commodity_id": "3", "customer_name": "Antoine de Saint-Exupéry","country": "France","pay_time": 1589191487,"price": 895}]}
 ```
 
 **目标数据库和表**
