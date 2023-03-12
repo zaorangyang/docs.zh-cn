@@ -43,11 +43,11 @@ FROM data_source
 选填。待导入数据的属性。语法：
 
 ```SQL
-[COLUMNS TERMINATED BY '<terminator>'],
+[COLUMNS TERMINATED BY '<column_separator>'],
+[ROWS TERMINATED BY'<row_separator>'],
 [COLUMNS ([<column_name>[,...]][,column_assignment[,...]])],
 [WHERE <expr>],
 [PARTITION ([<partition_name>[,...]])]
-COLUMNS TERMINATED BY
 ```
 
 `COLUMNS TERMINATED BY`
@@ -124,7 +124,6 @@ PROPERTIES ("<key1>" = "<value1>"[, "<key2>" = "<value2>" ...])
 ```Bash
 FROM <data_source>
  ("<key1>" = "<value1>"[, "<key2>" = "<value2>" ...])
-data_source
 ```
 
 `data_source`
