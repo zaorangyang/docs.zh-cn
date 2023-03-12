@@ -454,7 +454,7 @@ CREATE TABLE example_db.example_tbl3 (
     `customer_name` varchar(26) NULL COMMENT "顾客姓名", 
     `country` varchar(26) NULL COMMENT "顾客国籍", 
     `pay_time` bigint(20) NULL COMMENT "支付时间", 
-    `price`double SUM NULL COMMENT "支付金额") 
+    `price` double SUM NULL COMMENT "支付金额") 
 AGGREGATE KEY(`commodity_id`,`customer_name`,`country`,`pay_time`) 
 DISTRIBUTED BY HASH(`commodity_id`) BUCKETS 5; 
 ```
@@ -497,10 +497,10 @@ FROM KAFKA
 
 **目标数据库和表**
 
-假设在 StarRocks 集群的目标数据库 `example_db` 中存在目标表 `example_tbl3` 其中有一列衍生列 `pay_dt`，是基于 JSON 数据的Key `pay_time` 进行计算后的数据。其建表语句如下：
+假设在 StarRocks 集群的目标数据库 `example_db` 中存在目标表 `example_tbl4` 其中有一列衍生列 `pay_dt`，是基于 JSON 数据的Key `pay_time` 进行计算后的数据。其建表语句如下：
 
 ```SQL
-CREATE TABLE example_db.example_tbl3 ( 
+CREATE TABLE example_db.example_tbl4 ( 
     `commodity_id` varchar(26) NULL COMMENT "品类ID", 
     `customer_name` varchar(26) NULL COMMENT "顾客姓名", 
     `country` varchar(26) NULL COMMENT "顾客国籍",
@@ -516,7 +516,7 @@ DISTRIBUTED BY HASH(`commodity_id`) BUCKETS 5;
 提交导入作业时使用匹配模式。使用 `jsonpaths` 指定待导入 JSON 数据的 Key。并且由于 JSON 数据中 key `pay_time` 需要转换为 DATE 类型，才能导入到目标表的列 `pay_dt`，因此 `COLUMNS` 中需要使用函数`from_unixtime`进行转换。JSON 数据的其他 key 都能直接映射至表 `example_tbl3` 中。
 
 ```SQL
-CREATE ROUTINE LOAD example_db.example_tbl3_ordertest2 ON example_tbl3
+CREATE ROUTINE LOAD example_db.example_tbl4_ordertest2 ON example_tbl4
 COLUMNS(commodity_id, customer_name, country, pay_time, pay_dt=from_unixtime(pay_time, '%Y%m%d'), price)
 PROPERTIES
 (
@@ -549,10 +549,10 @@ FROM KAFKA
 
 **目标数据库和表**
 
-假设在 StarRocks 集群的目标数据库 `example_db` 中存在目标表`example_tbl4` ，其建表语句如下：
+假设在 StarRocks 集群的目标数据库 `example_db` 中存在目标表`example_tbl3` ，其建表语句如下：
 
 ```SQL
-CREATE TABLE example_db.example_tbl4 ( 
+CREATE TABLE example_db.example_tbl3 ( 
     `commodity_id` varchar(26) NULL COMMENT "品类ID", 
     `customer_name` varchar(26) NULL COMMENT "顾客姓名", 
     `country` varchar(26) NULL COMMENT "顾客国籍", 
@@ -567,7 +567,7 @@ DISTRIBUTED BY HASH(`commodity_id`) BUCKETS 5;
 提交导入作业，设置`"json_root" = "$.RECORDS"`指定实际待导入的json 数据的根节点。并且由于实际待导入的 JSON 数据是数组结构，因此还需要设置`"strip_outer_array" = "true"`，裁剪外层的数组结构。
 
 ```SQL
-CREATE ROUTINE LOAD example_db.example_tbl4_ordertest3 ON example_tbl4
+CREATE ROUTINE LOAD example_db.example_tbl3_ordertest3 ON example_tbl4
 PROPERTIES
 (
     "format" ="json",
