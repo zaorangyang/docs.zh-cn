@@ -51,6 +51,7 @@ FROM data_source
 ```
 
 `COLUMNS TERMINATED BY`
+
 如果导入 CSV 格式的数据，则可以指定列分隔符，默认为`\t`，即 Tab。例如可以输入 `COLUMNS TERMINATED BY ","`。指定列分隔符为逗号(,)。
 
 > **说明**
