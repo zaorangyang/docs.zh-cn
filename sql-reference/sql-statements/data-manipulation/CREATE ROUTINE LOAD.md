@@ -567,7 +567,7 @@ DISTRIBUTED BY HASH(`commodity_id`) BUCKETS 5;
 提交导入作业，设置`"json_root" = "$.RECORDS"`指定实际待导入的json 数据的根节点。并且由于实际待导入的 JSON 数据是数组结构，因此还需要设置`"strip_outer_array" = "true"`，裁剪外层的数组结构。
 
 ```SQL
-CREATE ROUTINE LOAD example_db.example_tbl3_ordertest3 ON example_tbl4
+CREATE ROUTINE LOAD example_db.example_tbl3_ordertest3 ON example_tbl3
 PROPERTIES
 (
     "format" ="json",
