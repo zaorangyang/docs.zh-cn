@@ -211,6 +211,7 @@ Routine Load 相关配置项，请参见[配置参数](../../../administration/C
     比如目标表中有三列，按顺序依次为 `col1`、`col2` 和 `col3` ；源数据中有四列，前三列按顺序依次对应目标表中的 `col1`、`col2` 和 `col3`，第四列在目标表中无对应的列。这种情况下，需要指定 `COLUMNS(col1, col2, col3, temp)`，其中，最后一列可随意指定一个名称（如 `temp`）用于占位即可。
   - **目标表存在基于源数据的列进行计算后生成的衍生列**。
     例如源数据中只有一个包含时间数据的列，格式为 `yyyy-mm-dd hh:mm:ss`。目标表中有三列，按顺序依次为 `year`、`month` 和 `day`，均是基于源数据中包含时间数据的列进行计算后生成的衍生列。这种情况下，可以指定 `COLUMNS(col, year = year(col), month=month(col), day=day(col)`。其中，`col` 是源数据中所包含的列的临时命名，`year = year(col)`、`month=month(col)` 和 `day=day(col)` 用于指定从源数据中的 `col` 列提取对应的数据并落入目标表中对应的衍生列，如 `year = year(col)` 表示通过 `year` 函数提取源数据中 `col` 列的 `yyyy` 部分的数据并落入目标表中的 `year` 列。
+
   有关操作示例，请参见[设置列的映射和转换关系](#设置列的映射和转换关系)。
 
 ### 导入 JSON 数据
