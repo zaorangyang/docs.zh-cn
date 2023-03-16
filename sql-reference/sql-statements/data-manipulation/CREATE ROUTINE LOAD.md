@@ -80,7 +80,7 @@ FROM data_source
 
 `WHERE`
 
-设置过滤条件，只有满足过滤条件的数据才会导入到 StarRocks 中。例如只希望导入 `col1` 大于 `100` 并且 `col2` 等于 `1000` 的数据行，则可以输入 `WHERE col1 > 100 and col2 = 1000;`。
+设置过滤条件，只有满足过滤条件的数据才会导入到 StarRocks 中。例如只希望导入 `col1` 大于 `100` 并且 `col2` 等于 `1000` 的数据行，则可以输入 `WHERE col1 > 100 and col2 = 1000`。
 
 > **说明**
 >
@@ -173,22 +173,22 @@ FROM <data_source>
 
 - **使用SSL 加密和 CA 证书认证访问 Kafka**
 
-```Plaintext
-"property.security.protocol" = "ssl", --使用 SSL 加密
-"property.ssl.ca.location" = "FILE:ca-cert", --CA 证书的位置
+```sql
+"property.security.protocol" = "ssl", -- 使用 SSL 加密
+"property.ssl.ca.location" = "FILE:ca-cert", -- CA 证书的位置
 --如果 Kafka server 端开启了 client 认证，则还需设置如下三个参数：
-"property.ssl.certificate.location" = "FILE:client.pem", --client 的 public key 的位置
-"property.ssl.key.location" = "FILE:client.key", --client 的 private key 的位置
-"property.ssl.key.password" = "abcdefg", --client 的 private key 的密码
+"property.ssl.certificate.location" = "FILE:client.pem", -- Client 的 public key 的位置
+"property.ssl.key.location" = "FILE:client.key", -- Client 的 private key 的位置
+"property.ssl.key.password" = "abcdefg" -- Client 的 private key 的密码
 ```
 
 - **使用 SASL 认证机制访问 Kafka**
 
-```Plaintext
-"property.security.protocol"="SASL_PLAINTEXT", --使用 SASL 认证机制
-"property.sasl.mechanism"="PLAIN", --SASL 的认证方式为 PLAIN
-"property.sasl.username"="admin", --SASL 的用户名
-"property.sasl.password"="admin" --SASL 的密码
+```sql
+"property.security.protocol"="SASL_PLAINTEXT", -- 使用 SASL 认证机制
+"property.sasl.mechanism"="PLAIN", -- SASL 的认证方式为 PLAIN
+"property.sasl.username"="admin", -- SASL 的用户名
+"property.sasl.password"="admin" -- SASL 的密码
 ```
 
 ### FE 和 BE 配置项
@@ -277,8 +277,8 @@ FROM KAFKA
 (
     "kafka_broker_list" ="<kafka_broker1_ip>:<kafka_broker1_port>,<kafka_broker2_ip>:<kafka_broker2_port>",
     "kafka_topic" = "ordertest1",
-    "kafka_partitions" ="0,1,2,3", --指定分区
-    "kafka_offsets" = "1000, OFFSET_BEGINNING, OFFSET_END, 2000" --指定起始位点
+    "kafka_partitions" ="0,1,2,3", -- 指定分区
+    "kafka_offsets" = "1000, OFFSET_BEGINNING, OFFSET_END, 2000" -- 指定起始位点
 );
 ```
 
@@ -304,7 +304,7 @@ COLUMNS TERMINATED BY ",",
 COLUMNS (order_id, pay_dt, customer_name, nationality, gender, price)
 PROPERTIES
 (
-"desired_concurrent_number" = "5" --设置单个 Routine Load 导入作业的期望任务并发度
+"desired_concurrent_number" = "5" -- 设置单个 Routine Load 导入作业的期望任务并发度
 )
 FROM KAFKA
 (
@@ -374,7 +374,7 @@ COLUMNS TERMINATED BY ",",
 COLUMNS (order_id, pay_dt, customer_name, nationality, gender, price)
 PROPERTIES
 (
-"strict_mode" = "true" --设置导入作业为严格模式
+"strict_mode" = "true" -- 设置导入作业为严格模式
 )
 FROM KAFKA
 (
@@ -393,8 +393,8 @@ COLUMNS TERMINATED BY ",",
 COLUMNS (order_id, pay_dt, customer_name, nationality, gender, price)
 PROPERTIES
 (
-"max_batch_rows" = "100000", --错误检测窗口范围为单个 Routine Load 导入任务所消费的 10 * max-batch-rows 行数。
-"max_error_number" = "100" --错误检测窗口范围内允许的错误数据行数的上限
+"max_batch_rows" = "100000", -- 错误检测窗口范围为单个 Routine Load 导入任务所消费的 10 * max-batch-rows 行数。
+"max_error_number" = "100" -- 错误检测窗口范围内允许的错误数据行数的上限
 )
 FROM KAFKA
 (
@@ -413,12 +413,12 @@ COLUMNS TERMINATED BY ",",
 COLUMNS (order_id, pay_dt, customer_name, nationality, gender, price)
 PROPERTIES
 (
-"property.security.protocol" = "ssl", --使用 SSL 加密
-"property.ssl.ca.location" = "FILE:ca-cert", --CA 证书的位置
---如果 Kafka Server 端开启了 Client 身份认证，则还需设置如下三个参数：
-"property.ssl.certificate.location" = "FILE:client.pem", --Client 的 Public Key 的位置
-"property.ssl.key.location" = "FILE:client.key", --Client 的 Private Key 的位置
-"property.ssl.key.password" = "abcdefg", --Client 的 Private Key 的密码
+"property.security.protocol" = "ssl", -- 使用 SSL 加密
+"property.ssl.ca.location" = "FILE:ca-cert", -- CA 证书的位置
+-- 如果 Kafka Server 端开启了 Client 身份认证，则还需设置如下三个参数：
+"property.ssl.certificate.location" = "FILE:client.pem", -- Client 的 Public Key 的位置
+"property.ssl.key.location" = "FILE:client.key", -- Client 的 Private Key 的位置
+"property.ssl.key.password" = "abcdefg" -- Client 的 Private Key 的密码
 )
 FROM KAFKA
 (
