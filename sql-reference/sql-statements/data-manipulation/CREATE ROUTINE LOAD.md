@@ -260,7 +260,7 @@ CREATE TABLE example_db.example_tbl1 (
     `customer_name` varchar(26) NULL COMMENT "顾客姓名", 
     `nationality` varchar(26) NULL COMMENT "国籍", 
     `gender` varchar(26) NULL COMMENT "性别", 
-    `price`double NULL COMMENT "支付金额") 
+    `price` double NULL COMMENT "支付金额") 
 PRIMARY KEY (order_id,pay_dt) 
 DISTRIBUTED BY HASH(`order_id`) BUCKETS 5; 
 ```
