@@ -403,7 +403,7 @@ MySQL [test_db]> SELECT * FROM table2;
 
   ```SQL
   CREATE ROUTINE LOAD test_db.table3 ON table3
-  COLUMNS(id, name, score, temp, __op = 'temp')
+  COLUMNS(id, name, score, temp, __op = temp)
   PROPERTIES
   (
       "desired_concurrent_number" = "3",
