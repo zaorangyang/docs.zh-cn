@@ -375,7 +375,7 @@ MySQL [test_db]> SELECT * FROM table2;
   curl --location-trusted -u root: \
       -H "label:label4" \
       -H "column_separator:," \
-      -H "columns: id, name, score, temp, __op = 'temp'" \
+      -H "columns: id, name, score, temp, __op = temp" \
       -T example3.csv -XPUT\
       http://<fe_host>:<fe_http_port>/api/test_db/table3/_stream_load
   ```
