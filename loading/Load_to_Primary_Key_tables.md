@@ -185,7 +185,7 @@ StarRocks 的主键模型目前支持 UPSERT 和 DELETE 操作，不支持区分
     ```SQL
     CREATE ROUTINE LOAD test_db.table1 ON table1
     COLUMNS TERMINATED BY ",",
-    COLUMNS (id, name, score, __op = upsert)
+    COLUMNS (id, name, score, __op ='upsert')
     PROPERTIES
     (
         "desired_concurrent_number" = "3",
