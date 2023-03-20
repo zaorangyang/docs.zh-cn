@@ -14,7 +14,7 @@ StarRocks 还支持部分更新 (Partial Update) 和条件更新 (Conditional Up
 
 StarRocks 的主键模型目前支持 UPSERT 和 DELETE 操作，不支持区分 INSERT 和 UPDATE 操作。
 
-在创建导入作业时，StarRocks 支持在导入作业的创建语句或或命令中添加 `__op` 字段，用于指定操作类型。
+在创建导入作业时，StarRocks 支持在导入作业的创建语句或命令中添加 `__op` 字段，用于指定操作类型。
 
 > **说明**
 >
