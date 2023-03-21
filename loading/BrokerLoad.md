@@ -77,28 +77,28 @@ Broker Load 支持从如下外部存储系统导入数据：
    a. 创建一张名为 `table1` 的主键模型表。表包含 `id`、`name` 和 `score` 三列，分别代表用户 ID、用户名称和用户得分，主键为 `id` 列，如下所示：
 
    ```SQL
-      MySQL [test_db]> CREATE TABLE `table1`
-      (
-          `id` int(11) NOT NULL COMMENT "用户 ID",
-          `name` varchar(65533) NULL DEFAULT "" COMMENT "用户姓名",
-          `score` int(11) NOT NULL DEFAULT "0" COMMENT "用户得分"
-      )
-          ENGINE=OLAP
-          PRIMARY KEY(`id`)
-          DISTRIBUTED BY HASH(`id`) BUCKETS 10;
-      ```
+   MySQL [test_db]> CREATE TABLE `table1`
+   (
+       `id` int(11) NOT NULL COMMENT "用户 ID",
+       `name` varchar(65533) NULL DEFAULT "" COMMENT "用户姓名",
+       `score` int(11) NOT NULL DEFAULT "0" COMMENT "用户得分"
+   )
+   ENGINE=OLAP
+   PRIMARY KEY(`id`)
+   DISTRIBUTED BY HASH(`id`) BUCKETS 10;
+   ```
 
    b. 创建一张名为 `table2` 的主键模型表。表包含 `id` 和 `city` 两列，分别代表城市 ID 和城市名称，主键为 `id` 列，如下所示：
 
    ```SQL
-      MySQL [test_db]> CREATE TABLE `table2`
-      (
-          `id` int(11) NOT NULL COMMENT "城市 ID",
-          `city` varchar(65533) NULL DEFAULT "" COMMENT "城市名称"
-      )
-          ENGINE=OLAP
-          PRIMARY KEY(`id`)
-          DISTRIBUTED BY HASH(`id`) BUCKETS 10;
+   MySQL [test_db]> CREATE TABLE `table2`
+   (
+       `id` int(11) NOT NULL COMMENT "城市 ID",
+       `city` varchar(65533) NULL DEFAULT "" COMMENT "城市名称"
+   )
+   ENGINE=OLAP
+   PRIMARY KEY(`id`)
+   DISTRIBUTED BY HASH(`id`) BUCKETS 10;
    ```
 
 2. 在本地文件系统中创建 CSV 格式的数据文件。
