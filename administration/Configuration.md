@@ -104,9 +104,8 @@ ADMIN SET FRONTEND CONFIG ("key" = "value");
 |history_job_keep_max_second|604800|历史任务最大的保留时长，例如 schema change 任务，单位为秒。|
 |label_keep_max_num|1000|一定时间内所保留导入任务的最大数量。超过之后历史导入作业的信息会被删除。|
 |label_keep_max_second|259200|已经完成、且处于 FINISHED 或 CANCELLED 状态的导入作业记录在 StarRocks 系统 label 的保留时长，默认值为 3 天。<br>该参数配置适用于所有模式的导入作业。单位为秒。设定过大将会消耗大量内存。|
-|max_routine_load_job_num|100|最大的 Routine Load 作业数。|
 |max_routine_load_task_concurrent_num|5|每个 Routine Load 作业最大并发执行的 task 数。|
-|max_routine_load_task_num_per_be|5|每个 BE 最大并发执行的 Routine Load task 数，需要小于等于 BE 的配置项 `routine_load_thread_pool_size`。|
+|max_routine_load_task_num_per_be|16|每个 BE 最大并发执行的 Routine Load task 数，需要小于等于 BE 的配置项 `routine_load_thread_pool_size`。|
 |max_routine_load_batch_size|4294967296|每个 Routine Load task 导入的最大数据量，单位为 Byte。|
 |routine_load_task_consume_second|15|每个 Routine Load task 消费数据的最大时间，单位为秒。|
 |routine_load_task_timeout_second|60|每个 Routine Load task 超时时间，单位为秒。|
