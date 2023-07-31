@@ -242,6 +242,39 @@ Routine Load 相关配置项，请参见[配置参数](../../../administration/C
 >
 > 如果待导入 JSON 数据中 Key 名（Key的顺序和数量不需要对应）都能对应目标表中列名，则可以使用简单模式导入 JSON 数据，无需配置 `jsonpaths` 和 `COLUMNS`。
 
+## 认证
+在连接 Kafka 时支持以下多种认证方式：
+- 通过 property.security.protocol 指定认证方式, 支持 SASL_SSL, SSL, GSSAPI,  SASL_PLAINTEXT。
+- 对于具体的某一种认证方式，需要填写按需填写其他参数。
+
+### SASL
+
+| Parameter                  | Required | Value                                                                                                 |
+| -------------------------  | -------- | ---------------------------------------------------------------------------------------------------- |
+| property.sasl.mechanism    | YES      | 指定认证机制，取值为 PLAIN, SCRAM-SHA-256, SCRAM-SHA-512                                           |
+| property.sasl.username     | YES      | 用户名                                                                                               |
+| property.sasl.password     | YES      | 密码                                                                                                 |
+| property.ssl.ca.location   | NO       | 指定CA (certificate authority)证书的绝对路径。用于SSL客户端和服务器身份验证。如果未指定，则使用系统默认的CA证书。  |
+
+### SSL
+
+| Parameter                           | Required | Value                                              |
+| ----------------------------------- | -------- | -------------------------------------------------- |
+| property.ssl.truststore.location    | YES      | truststore location                                |
+| property.ssl.truststore.password    | YES      | truststore password in broker server.properties   |
+| property.ssl.keystore.location      | YES      | keystore location                                  |
+| property.ssl.keystore.password      | YES      | keystore password in broker server.properties     |
+| property.ssl.key.password           | YES      | ssl key password                                   |
+
+### GSSAPI
+
+| Parameter                              | Required | Value                    |
+| -------------------------------------  | -------- | ------------------------ |
+| property.sasl.kerberos.service.name    | YES      | Broker service name      |
+| property.sasl.kerberos.keytab          | YES      | Client keytab location   |
+| property.sasl.kerberos.principal       | YES      | sasl.kerberos.principal   |
+
+
 ## 示例
 
 ### 导入 CSV 数据
